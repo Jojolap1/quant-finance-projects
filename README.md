@@ -1,37 +1,53 @@
 # Quantitative Finance Projects
 
-Jonathan Phung, Master in Management (Market Finance), ESCP Business School.
+**Jonathan Phung** · Master in Management (Market Finance), ESCP Business School · ex-Société Générale FIC Trading intern
 
-This repository gathers quantitative finance projects on derivatives pricing and implied volatility.
+Derivatives pricing and implied volatility projects in Python and JavaScript.
+
+| Project | What it shows | Link |
+|---|---|---|
+| G10 FX Option Pricer | Multi-leg FX option strategies: premium, Greeks, P&L at expiry | [Live demo](https://jojolap1.github.io/quant-finance-projects/fx-pricer.html) |
+| SPX Implied Volatility Surface | Implied vol surface rebuilt from listed SPX option quotes | [Notebook](spx_implied_volatility_surface.ipynb) |
+| Black-Scholes vs Heston | How stochastic volatility creates smiles and skew | [Results](#3-black-scholes-vs-heston) |
+
+---
 
 ## 1. G10 FX Option Pricer
 
-A browser-based tool to build vanilla FX option strategies (calls, puts, straddles, strangles, up to five legs) on nine G10 currency pairs. Each leg is priced with a forward Black model; the tool aggregates premium, delta, delta notional and vega across legs and plots the strategy P&L at expiry.
+**[Open the live pricer](https://jojolap1.github.io/quant-finance-projects/fx-pricer.html)**, no installation needed.
 
-Files: `fx-pricer.html`, `fx-pricer.js`, `fx-pricer.css`, `fx-market-data.json`. Open `fx-pricer.html` in a browser, no installation needed.
+Build vanilla FX option strategies (calls, puts, straddles, strangles, up to five legs) on nine G10 currency pairs. Each leg is priced with a forward Black model; the tool aggregates premium, delta, delta notional and vega across legs and plots the strategy P&L at expiry.
 
-Limitations: static market snapshot, a single ATM volatility for all strikes (no smile), simplified FX delta conventions.
+*Limitations:* static market snapshot, a single ATM volatility for all strikes (no smile), simplified FX delta conventions.
 
 ## 2. SPX Implied Volatility Surface
 
-Reconstruction of an SPX implied volatility surface from a snapshot of listed option quotes: liquidity filters, call/put matching by strike and expiry, forward estimation through put-call parity, selection of out-of-the-money options, Black-76 inversion, then smiles and 3D surface.
+![SPX implied volatility surface](spx_implied_volatility_surface_3d.png)
 
-Notebook: `spx_implied_volatility_surface.ipynb` (expects `Chain.csv` and `Meta.csv`; falls back to a synthetic chain if they are missing).
+Notebook: [`spx_implied_volatility_surface.ipynb`](spx_implied_volatility_surface.ipynb). It downloads a live SPX option chain (Yahoo Finance) or reads `Chain.csv` / `Meta.csv`.
 
-Outputs: `spx_implied_volatility_smiles.png`, `spx_implied_volatility_surface_3d.png`, `spx_iv_surface_scatter_heatmap.png`.
+Pipeline: liquidity filters, call/put matching by strike and expiry, forward estimation through put-call parity, out-of-the-money selection, Black-76 inversion, calendar and butterfly arbitrage checks.
 
-Limitations: mid prices, flat interest rate, single snapshot, no dividend curve, no full arbitrage repair.
+![SPX smiles by expiry](spx_implied_volatility_smiles.png)
 
-## 3. Black-Scholes vs Heston Volatility Surfaces
+*Limitations:* single snapshot, mid prices, flat interest rate, no dividend curve, arbitrage diagnosed but not repaired.
 
-Comparison of a constant-volatility Black-Scholes surface with a Heston stochastic-volatility surface, priced both with the semi-closed form and with Monte Carlo simulation, plus sensitivity of the 1M smile to the vol-of-vol and correlation parameters.
+## 3. Black-Scholes vs Heston
 
-Outputs: `heston_*.png`, `black_scholes_surface.png`, `smiles_comparison_*.png`.
+Comparison of a constant-volatility Black-Scholes surface with a Heston stochastic-volatility surface, priced with the semi-closed form and with Monte Carlo, plus sensitivity of the 1M smile to vol-of-vol and correlation.
 
-## Tools
+![Black-Scholes vs Heston smiles, 3M](smiles_comparison_3M.png)
 
-Python (NumPy, pandas, Matplotlib), JavaScript, VBA.
+| Heston, semi-closed form | Heston, Monte Carlo |
+|---|---|
+| ![](heston_semiclosed_surface.png) | ![](heston_montecarlo_surface.png) |
 
-## Contact
+| Vol-of-vol sensitivity (1M) | Correlation sensitivity (1M) |
+|---|---|
+| ![](heston_xi_sensitivity_1M.png) | ![](heston_rho_sensitivity_1M.png) |
 
-Jonathan Phung, jonathan.phung@edu.escp.eu
+---
+
+**Tools:** Python (NumPy, pandas, SciPy, Matplotlib), JavaScript, VBA
+
+**Contact:** jonathan.phung@edu.escp.eu
