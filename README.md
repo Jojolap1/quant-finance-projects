@@ -16,6 +16,8 @@ Limitations: static market snapshot, a single ATM volatility for all strikes (no
 
 Reconstruction of an SPX implied volatility surface from a snapshot of listed option quotes: liquidity filters, call/put matching by strike and expiry, forward estimation through put-call parity, selection of out-of-the-money options, Black-76 inversion, then smiles and 3D surface.
 
+Notebook: `spx_implied_volatility_surface.ipynb` (expects `Chain.csv` and `Meta.csv`; falls back to a synthetic chain if they are missing).
+
 Outputs: `spx_implied_volatility_smiles.png`, `spx_implied_volatility_surface_3d.png`, `spx_iv_surface_scatter_heatmap.png`.
 
 Limitations: mid prices, flat interest rate, single snapshot, no dividend curve, no full arbitrage repair.
