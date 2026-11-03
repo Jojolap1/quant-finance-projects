@@ -8,7 +8,6 @@ Derivatives pricing and implied volatility projects in Python and JavaScript.
 |---|---|---|
 | G10 FX Option Pricer | Multi-leg FX option strategies: premium, Greeks, P&L at expiry | [Live demo](https://jojolap1.github.io/quant-finance-projects/fx-pricer.html) |
 | SPX Implied Volatility Surface | Implied vol surface rebuilt from listed SPX option quotes | [Notebook](spx_implied_volatility_surface.ipynb) |
-| Black-Scholes vs Heston | How stochastic volatility creates smiles and skew | [Results](#3-black-scholes-vs-heston) |
 
 ---
 
@@ -31,20 +30,6 @@ Pipeline: liquidity filters, call/put matching by strike and expiry, forward est
 ![SPX smiles by expiry](spx_implied_volatility_smiles.png)
 
 *Limitations:* single snapshot, mid prices, flat interest rate, no dividend curve, arbitrage diagnosed but not repaired.
-
-## 3. Black-Scholes vs Heston
-
-Comparison of a constant-volatility Black-Scholes surface with a Heston stochastic-volatility surface, priced with the semi-closed form and with Monte Carlo, plus sensitivity of the 1M smile to vol-of-vol and correlation.
-
-![Black-Scholes vs Heston smiles, 3M](smiles_comparison_3M.png)
-
-| Heston, semi-closed form | Heston, Monte Carlo |
-|---|---|
-| ![](heston_semiclosed_surface.png) | ![](heston_montecarlo_surface.png) |
-
-| Vol-of-vol sensitivity (1M) | Correlation sensitivity (1M) |
-|---|---|
-| ![](heston_xi_sensitivity_1M.png) | ![](heston_rho_sensitivity_1M.png) |
 
 ---
 
