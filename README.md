@@ -1,6 +1,7 @@
 # Quantitative Finance Projects
 
-**Jonathan Phung** · Master in Management (Market Finance), ESCP Business School · ex-Société Générale FIC Trading intern
+**Jonathan Phung** · Master in Management (Market Finance), ESCP Business School · ex-Société Générale FIC Trading intern & ex-Pictet 
+Product Sales 
 
 Derivatives pricing and implied volatility projects in Python.
 
