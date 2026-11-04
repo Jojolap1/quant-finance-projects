@@ -2,22 +2,28 @@
 
 **Jonathan Phung** · Master in Management (Market Finance), ESCP Business School · ex-Société Générale FIC Trading intern
 
-Derivatives pricing and implied volatility projects in Python and JavaScript.
+Derivatives pricing and implied volatility projects in Python.
 
 | Project | What it shows | Link |
 |---|---|---|
-| G10 FX Option Pricer | Multi-leg FX option strategies: premium, Greeks, P&L at expiry | [Live demo](https://jojolap1.github.io/quant-finance-projects/fx-pricer.html) |
+| G10 FX Option Pricer | Interactive Python app: multi-leg FX options with a volatility smile, premium and Greeks | [Live app](https://jonathan-fx-pricer.streamlit.app) |
 | SPX Implied Volatility Surface | Implied vol surface rebuilt from listed SPX option quotes | [Notebook](spx_implied_volatility_surface.ipynb) |
 
 ---
 
 ## 1. G10 FX Option Pricer
 
-**[Open the live pricer](https://jojolap1.github.io/quant-finance-projects/fx-pricer.html)**, no installation needed.
+**[Open the live app](https://jonathan-fx-pricer.streamlit.app)**, no installation needed.
 
-Build vanilla FX option strategies (calls, puts, straddles, strangles, up to five legs) on nine G10 currency pairs. Each leg is priced with a forward Black model; the tool aggregates premium, delta, delta notional and vega across legs and plots the strategy P&L at expiry.
+Interactive Python app (Streamlit) to price vanilla FX option structures on nine G10 currency pairs: calls, puts, straddles, strangles, risk reversals and spreads, up to five editable legs.
 
-*Limitations:* static market snapshot, a single ATM volatility for all strikes (no smile), simplified FX delta conventions.
+- **Pricing:** Garman-Kohlhagen (Black-76 on the forward), premium discounted to today, foreign rate implied from the forward by covered interest parity
+- **Volatility smile:** built from ATM, 25-delta and 10-delta risk reversals and butterflies, interpolated in log-moneyness
+- **Outputs:** premium (base ccy and % of notional), spot delta, vega, gamma, P&L at expiry and the smile with your strikes
+
+Code: [`fx_core.py`](fx_core.py) (pricing and smile) and [`app.py`](app.py) (interface). Run locally with `pip install -r requirements.txt` then `streamlit run app.py`.
+
+*Limitations:* static market snapshot, quote-currency rate is an assumption, simplified smile construction (no full calibration, non premium-adjusted deltas).
 
 ## 2. SPX Implied Volatility Surface
 
@@ -33,6 +39,6 @@ Pipeline: liquidity filters, call/put matching by strike and expiry, forward est
 
 ---
 
-**Tools:** Python (NumPy, pandas, SciPy, Matplotlib), JavaScript, VBA
+**Tools:** Python (NumPy, pandas, SciPy, Matplotlib, Plotly, Streamlit), VBA
 
 **Contact:** jonathan.phung@edu.escp.eu
