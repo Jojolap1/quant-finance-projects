@@ -15,7 +15,7 @@ Derivatives pricing, implied volatility and trade-idea projects in Python.
 
 ## 1. G10 FX Option Pricer
 
-**[Open the live app](https://jonathan-fx-pricer.streamlit.app)**, no installation needed.
+**[Open the live app](https://jonathan-fx-pricer.streamlit.app)**
 
 Interactive Python app (Streamlit) to price vanilla FX option structures on nine G10 currency pairs: calls, puts, straddles, strangles, risk reversals and spreads, up to five editable legs.
 
