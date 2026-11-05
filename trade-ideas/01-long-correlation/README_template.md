@@ -6,15 +6,21 @@
 >
 > **Does 25+ years of data back the thesis? {{THESIS_VERDICT}}**
 
+**Bottom line (S1-sectors vs a random day, same period):**
+* S&P 500 falls of 10% or more within 3M: {{S1S_PC}} vs {{S1S_PCB}} ({{S1S_LIFT}}×; threshold fixed in advance: 1.5×).
+* Correlation spikes of +{{CORR_SPIKE}} pts within 3M: {{S1S_PS}} vs {{S1S_PSB}}.
+* Average P&L per trade of buying 3M correlation at COR3M: {{S1S_CP}} vs {{S1S_CPB}} corr pts. Buying 1M variance at the VIX: {{S1S_VP}} vs {{S1S_VPB}} vol pts.
+* Naive high-VIX rule (S0), for comparison: correlation spikes {{S0_PS}} vs {{S0_PSB}}, variance P&L {{S0_VP}} vs {{S0_VPB}} vol pts.
+
 ## 1. Thesis
 Sometimes single stocks move a lot while the index stays calm, because they move in different directions. Dispersion is then extreme and correlation is low. My view is that this state does not last: when a macro shock hits, everything falls together and correlation spikes. Buying correlation in that state means buying crash insurance while it is cheap. The trade is short dispersion: long index vol, short single-stock vol.
 
 The idea is tested as a rule fixed in advance, not by picking crisis dates. The rule uses only data available on each date, counts false alarms, and compares each signal with a random day of the same period and with a naive "high VIX" rule.
 
 ## 2. The signal
-* **S1-sectors (primary, since {{S1S_START}}):** the 1M gap between average sector vol and basket vol, for the 9 original sector SPDR ETFs, is in the top {{DISP_THR}} of its history, **and** 1M sector correlation is in the bottom {{CORR_THR}}. These are the same 9 investable ETFs since 1998, so there is no survivorship bias.
+* **S1-sectors (primary, since {{S1S_START}}):** the 1M gap between average sector vol and basket vol, for the 9 original sector SPDR ETFs, is above the {{DISP_THR}} of its own history, **and** 1M sector correlation is below the {{CORR_THR}}. These are the same 9 investable ETFs since 1998, so there is no survivorship bias.
 * **S1-stocks (robustness, since {{S1_START}}):** the same rule on today's top-{{N}} S&P 500 stocks. This matches the COR3M basket but applies today's names to the past.
-* **S0 (naive benchmark, since {{S0_START}}):** VIX is in the top {{VOL_THR}} of its history.
+* **S0 (naive benchmark, since {{S0_START}}):** VIX is above the {{VOL_THR}} of its own history.
 * **Today:**
   * Sector dispersion is {{DISP_S_NOW}} vol pts (percentile {{P_DISP_S}}), with sector correlation of {{RCS_1M}} (percentile {{P_CORR_S}}).
   * Stock dispersion is {{DISP_NOW}} vol pts (percentile {{P_DISP}}), with stock correlation of {{RC_1M}} over 1M and {{RC_3M}} over 3M.
