@@ -94,10 +94,26 @@ There were 30 S1-sectors episodes. 7 were followed by a sell-off of at least 10%
 
 ![Correlation backtest](figures/05_backtest_correlation.png)
 
-## 5. Structure
-* **Long** 3M SPX ATM straddles (or an SPX variance swap). **Short** 3M ATM straddles on the 25 largest names (52% of index weight). Delta-hedge daily.
-* **Theta-neutral:** component vega = **0.43 × index vega**. Per $100k of index vega, a 1-point rise in implied correlation gains ≈ **$35,664**.
-* Today's snapshot: SPX 3M ATM vol 14.2%, average top-50 3M ATM vol 34.3%, implied correlation (own calculation) 12.3.
+## 5. Structure and sizing
+* **Long** 3M SPX ATM straddles (or an SPX variance swap). **Short** 3M ATM straddles on the 25 largest names (52% of index weight), allocated by index weight. Same maturity on both legs. Delta-hedge daily.
+* **Sizing:** total component vega = σ_index / Σwᵢσᵢ × index vega = **0.43 × index vega**. Today's snapshot: SPX 3M ATM vol 14.2%, average top-50 3M ATM vol 34.3%, implied correlation (own calculation) 12.3.
+
+**Why this ratio: theta-neutral = vega-neutral to proportional vol shocks**
+1. For an ATM option, theta ≈ − vega × σ / (2T). With the same maturity on both legs, the 2T cancels, so the book is **theta-neutral** when Σ vegaᵢ × σᵢ = vega_index × σ_index.
+2. In a **proportional** shock, every vol rises by the same x% (15% → 16.5%, 30% → 33% for x = 10%). Each leg moves by vega × x × σ, so the book moves by x × (Σ vegaᵢσᵢ − vega_index σ_index). The theta-neutral condition sets this bracket to zero: **the book is flat for any proportional shock**.
+3. A proportional shock leaves the ratio σ_index / Σwᵢσᵢ unchanged, and implied correlation ≈ (that ratio)². So the book is flat exactly when **correlation does not move**, and it gains only when correlation rises.
+4. Illustration (fictitious levels: index 15%, stocks 30%, index vega $100k per vol point, stock vega $50k):
+
+| Shock | Index leg (long) | Stock leg (short) | Book |
+|---|---|---|---|
+| All vols +10% (correlation unchanged) | +1.5 pts → +$150k | +3 pts → −$150k | **0** |
+| All vols +1 point (equal-point shock) | +$100k | −$50k | +$50k: residual long vega in points |
+| Crash: index 15 → 20, stocks 30 → 33 (correlation ≈ 0.25 → 0.37) | +$500k | −$150k | **+$350k** |
+
+5. **The alternative, vega-neutral in points** (Σ vegaᵢ = vega_index), is flat to equal-point shocks instead. It cannot be theta-neutral at the same time, because stock vols are above index vol whenever correlation is below 1, and it adds a bet on the level of volatility.
+6. **Correlation sensitivity:** per $100k of index vega, a 1-point rise in implied correlation gains ≈ **$35,664** (first order).
+7. **Limits:** the neutrality holds at inception only. It needs ATM options of the same maturity, and it is first-order: vegas drift as spot and vols move (vanna, volga), so large moves break it.
+
 * **Carry:** ≈ -6.5 correlation pts per 3M at today's levels (negative = the insurance premium).
 * **Cleaner alternative:** SPX put spreads or VIX calls, which have the same crash payoff without gap risk on short single-stock options.
 
@@ -117,3 +133,14 @@ There were 30 S1-sectors episodes. 7 were followed by a sell-off of at least 10%
 * **Backtest A:** it covers only the long-index-vol leg, and treats VIX² as the variance strike with no convexity adjustment.
 * **Backtest B:** it uses COR3M as the strike, but COR3M is not an executable price, and it covers only the COR3M sample.
 * **Not modelled anywhere:** short single-stock gamma and transaction costs.
+
+## 8. Conclusion
+**1. Forecasting power.** After S1-sectors days, the S&P 500 fell 10% or more within 3M in 22% of cases, against 16% on a random day (1.36×, versus the 1.5× bar fixed in advance). 7 of 30 episodes were followed by such a sell-off and 22 were false alarms. The signal is not a reliable crash forecaster.
+
+**2. Cost of the insurance.** Buying 3M correlation at COR3M after the signal lost 7.3 pts per trade on average, against 22.5 on a random day: about 3.1× cheaper, but still a cost. Correlation spikes of +15 pts followed 22% of signal days, against 12% of random days.
+
+**3. The naive rule.** After high-VIX days, correlation spikes followed 3% of days (random day: 6%) and buying variance at the VIX returned -3.41 vol pts per trade (random day: -2.56). High volatility arrives with the crisis, when insurance is already expensive: it is the wrong moment to buy correlation.
+
+**4. Today (2026-11-04).** Rule status: SIGNAL ON — S1-sectors conditions met today. Sector dispersion is at percentile 99% of its history, sector correlation at percentile 0%, COR3M at 12.2 (percentile 3%). Carry of a long-correlation position: about -6.5 correlation pts per 3M if nothing happens.
+
+**5. Recommendation.** Present the idea as an **opportunistic hedge, not a forecast**: correlation is cheapest when S1 is ON, so this is the moment to buy a small amount of crash insurance whose cost is known in advance. Size it on the carry budget. SPX put spreads or VIX calls give the same crash payoff without the gap risk of short single-stock options.
