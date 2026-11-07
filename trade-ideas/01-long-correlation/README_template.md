@@ -63,9 +63,9 @@ There were {{S1S_EP}} S1-sectors episodes. {{S1S_EP_CRISIS}} were followed by a 
 
 ## 5. Structure and sizing
 * **Long** 3M SPX ATM straddles (or an SPX variance swap). **Short** 3M ATM straddles on the {{TRADE_N}} largest names ({{TRADE_IDX_WEIGHT}} of index weight), allocated by index weight. Same maturity on both legs. Delta-hedge daily.
-* **Sizing:** total component vega = σ_index / Σwᵢσᵢ × index vega = **{{VEGA_RATIO}} × index vega**. Today's snapshot: SPX 3M ATM vol {{IDX_IV_3M}}, average top-{{N}} 3M ATM vol {{COMP_IV_3M}}, implied correlation (own calculation) {{IC_3M}}.
+* **Sizing: proportional vega-neutral (equivalently theta-neutral).** Total component vega = σ_index / Σwᵢσᵢ × index vega = **{{VEGA_RATIO}} × index vega**. Derivation and worked examples: [`notes/vega_neutral_sizing.md`](notes/vega_neutral_sizing.md). Today's snapshot: SPX 3M ATM vol {{IDX_IV_3M}}, average top-{{N}} 3M ATM vol {{COMP_IV_3M}}, implied correlation (own calculation) {{IC_3M}}.
 
-**Why this ratio: theta-neutral = vega-neutral to proportional vol shocks**
+**Why this ratio: proportional vega-neutral = theta-neutral**
 1. For an ATM option, theta ≈ − vega × σ / (2T). With the same maturity on both legs, the 2T cancels, so the book is **theta-neutral** when Σ vegaᵢ × σᵢ = vega_index × σ_index.
 2. In a **proportional** shock, every vol rises by the same x% (15% → 16.5%, 30% → 33% for x = 10%). Each leg moves by vega × x × σ, so the book moves by x × (Σ vegaᵢσᵢ − vega_index σ_index). The theta-neutral condition sets this bracket to zero: **the book is flat for any proportional shock**.
 3. A proportional shock leaves the ratio σ_index / Σwᵢσᵢ unchanged, and implied correlation ≈ (that ratio)². So the book is flat exactly when **correlation does not move**, and it gains only when correlation rises.
