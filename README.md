@@ -9,7 +9,7 @@ Derivatives pricing, implied volatility and trade-idea projects in Python.
 |---|---|---|
 | G10 FX Option Pricer | Interactive Python app: multi-leg FX options with a volatility smile, premium and Greeks | [Live app](https://jonathan-fx-pricer.streamlit.app) |
 | SPX Implied Volatility Surface | Implied vol surface rebuilt from listed SPX option quotes | [Notebook](spx_implied_volatility_surface.ipynb) |
-| Trade Idea #01 — Conditional Long Correlation | Desk-style pitch: buying S&P 500 correlation (short dispersion) when dispersion is extreme, tested on full history | [Pitch](trade-ideas/01-long-correlation/) |
+| Trade Idea #01 — Conditional Long Correlation *(in progress)* | Desk-style pitch: buying S&P 500 correlation (short dispersion) when dispersion is extreme, tested on full history | [Pitch](trade-ideas/01-long-correlation/) |
 
 ---
 
@@ -44,9 +44,9 @@ Pipeline: liquidity filters, call/put matching by strike and expiry, forward est
 
 Desk-style pitches. Each one has a notebook that runs end to end in Google Colab on free data, and the notebook generates every level quoted in the pitch.
 
-| # | Idea | Asset class | Notebook |
-|---|---|---|---|
-| 01 | [Conditional long correlation — short S&P 500 dispersion](trade-ideas/01-long-correlation/) | Equity derivatives | [Open in Colab](https://colab.research.google.com/github/Jojolap1/quant-finance-projects/blob/main/trade-ideas/01-long-correlation/long_correlation_trade_idea.ipynb) |
+| # | Idea | Asset class | Status | Notebook |
+|---|---|---|---|---|
+| 01 | [Conditional long correlation — short S&P 500 dispersion](trade-ideas/01-long-correlation/) | Equity derivatives | In progress | [Open in Colab](https://colab.research.google.com/github/Jojolap1/quant-finance-projects/blob/main/trade-ideas/01-long-correlation/long_correlation_trade_idea.ipynb) |
 
 ---
 
