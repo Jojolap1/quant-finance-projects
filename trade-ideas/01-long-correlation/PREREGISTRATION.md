@@ -79,3 +79,16 @@ No Bloomberg access, and no public history of single-stock implied volatilities 
 3. **Sample.** It ends in February 2016 because the public file stops there. It overlaps the discovery years of the US search, and European and US volatility move together, so this is a different market but not an independent period.
 
 Everything else is unchanged: ON at or below the 20th past-only percentile (minimum 504 days), realized variance over the next 21 trading days, one-sided time-shift test at 5%, positive edge over the same VSTOXX quintile, and survival when any one episode is left out. One run.
+
+### Protocol 4 — result
+Run once on 2026-11-11, after the amendment commit. Sample 2000-12-20 to 2016-01-13: 3,771 days, rule ON on 233 days in 41 episodes. P&L of buying 1M variance at the VSTOXX, in vol points per trade.
+
+| Criterion | Result | Met? |
+|---|---|---|
+| Time-shift test, one-sided | signal +1.37 vs all days -2.24, p = 0.009 | yes |
+| Edge over the same VSTOXX quintile | +1.37 vs -2.81 | yes |
+| Survives leaving any one episode out | worst case -3.0, below the all-day mean | **no** |
+
+**Not retained.** The day-weighted average is carried by a single episode; averaged per episode the P&L is -3.8 and only 7 of 41 episodes are positive. Buying variance when the term structure is flat or inverted lost money most of the time and paid very large in one crisis. That is the profile of crash insurance bought late, not of a timing signal.
+
+Status of the lead after protocols 2 and 4: suggestive on day-weighted averages in two markets, not robust to removing one episode in Europe, not testable on correlation itself outside the US. Protocol 3 (forward test) remains open.
