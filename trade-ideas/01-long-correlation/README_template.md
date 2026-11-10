@@ -63,7 +63,7 @@ Three further candidates fixed in advance were also tested and rejected: see [`P
 ![Conditional outcomes](figures/03_conditional_outcomes.png)
 
 ## 4. Backtests (daily ladders, approximate mark-to-market, no costs)
-**A. Long 1M S&P 500 variance at the VIX, over {{VAR_BT_YEARS}} years.** This is the crash-payoff leg of the trade.
+**Long 1M S&P 500 variance at the VIX, over {{VAR_BT_YEARS}} years.** This is the crash-payoff leg of the trade.
 
 {{VAR_TABLE}}
 
@@ -71,13 +71,6 @@ Three further candidates fixed in advance were also tested and rejected: see [`P
 
 ![Variance backtest](figures/04_backtest_variance_long_history.png)
 
-**B. Long 3M correlation at COR3M, since {{COR3M_BT_START}}** (COR3M history only).
-
-{{CORR_TABLE}}
-
-{{MARKUP_TABLE}}
-
-{{FIG5}}
 
 ## 5. Structure
 * **Long** 3M SPX ATM straddles (or an SPX variance swap). **Short** 3M ATM straddles on the {{TRADE_N}} largest names ({{TRADE_IDX_WEIGHT}} of index weight). Delta-hedge daily.
@@ -100,9 +93,9 @@ Three further candidates fixed in advance were also tested and rejected: see [`P
 * **Small sample:** few independent episodes, so the percentages are indicative rather than statistically significant.
 * **Sector correlation:** the long-history signal uses sector correlation, which is not single-stock correlation.
 * **Backtest A:** it covers only the long-index-vol leg, and treats VIX² as the variance strike with no convexity adjustment.
-* **Backtest B:** it uses COR3M as the strike, but COR3M is not an executable price, and it covers only the COR3M sample.
+* **Correlation P&L:** COR3M is used as the strike, but it is an index, not an executable price.
 * **Not modelled anywhere:** short single-stock gamma and transaction costs.
-* **Measure of realized correlation:** index-based (the COR3M convention) and basket-based measures differ by many points and can flip the sign of the correlation P&L. Backtest B and the reference-crisis table still use today's names in the past; the point-in-time rows are the ones to trust.
+* **Measure of realized correlation:** index-based (the COR3M convention) and basket-based measures differ by many points and can flip the sign of the correlation P&L. The reference-crisis table still uses today's names in the past; the point-in-time rows are the ones to trust.
 * **Point-in-time basket:** the 50 largest US companies by CRSP capitalization, not the exact Cboe basket (no float adjustment, no index-membership test); sample ends 2025-12-31.
 
 ## 8. Conclusion

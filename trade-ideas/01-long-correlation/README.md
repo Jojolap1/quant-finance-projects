@@ -76,13 +76,30 @@ There were 30 S1-sectors episodes. 7 were followed by a sell-off of at least 10%
 | Correlation P&L with basket-based realized correlation: signal vs base | 9.0 vs -5.3 | 7.5 vs -5.2 | 3.5 vs -4.4 |
 | Correlation P&L per episode: mean (range leaving one episode out) | -12.4 (-13.6 to -11.3), 4 of 29 positive | -15.1 (-16.3 to -14.0), 5 of 34 positive | -6.3 (-7.4 to -5.7), 10 of 43 positive |
 | Sell-off episodes where buying correlation made money | 2 of 6 | 2 of 6 | 6 of 7 |
-| **S1-sectors entries, correlation P&L on the point-in-time basket**: signal vs base vs same COR3M level | 2.4 vs -4.2 vs -2.2; signal minus base 95% interval +1.3 to +12.1, shift-test p 0.03; leaving one episode out -0.7 to +3.7; per episode: mean -0.7, median -3.4, 8 of 29 positive | | |
+| **S1-sectors entries, correlation P&L on the point-in-time basket**: signal vs base vs same COR3M level | 2.4 vs -4.2 vs -2.2; signal minus base 95% interval +1.3 to +12.1, shift-test p 0.03; leaving one episode out -0.7 to +3.7; per episode: mean -0.6, median -3.4, 8 of 29 positive | | |
+
+**Looking for a better signal, with a holdout.** A declared family of 242 candidates (11 indicators, each high or low, alone or in pairs) was scored on 2006–2016 only; 98 had at least 100 days and 8 episodes. The best one, **COR3M high AND VIX3M/VIX low**, returned +8.0 pts per trade there against -8.6 on days with the same COR3M level (120 days, 8 episodes). Tested once on the years after 2016: -5.1 vs -11.6 at the same COR3M level and -3.1 on any day (38 days, 2 episodes), shift-test p = 0.51. **It is not retained**: it fired in only 2 episodes after the split, too few to judge. Of the ten best candidates, 10 keep a positive edge after the split and 'VIX3M/VIX low' appears in 8 of them: a lead for a test on fresh data, not a result. The validation years were not used to choose it, but they had been looked at for the earlier signals of this page.
+
+| Ten best candidates of the discovery period | Days / episodes | Edge vs same COR3M level | Validation days / episodes | Validation edge (not a test) |
+|---|---|---|---|---|
+| COR3M high AND VIX3M/VIX low | 120 / 8 | +16.6 | 38 / 2 | +6.5 |
+| sector correlation high AND VIX3M/VIX low | 158 / 16 | +12.1 | 116 / 10 | +2.0 |
+| VIX high AND VIX3M/VIX low | 154 / 12 | +13.8 | 164 / 21 | +2.4 |
+| stock dispersion low AND VIX3M/VIX low | 103 / 12 | +11.2 | 32 / 4 | +2.5 |
+| stock correlation high AND VIX3M/VIX low | 146 / 9 | +13.8 | 78 / 7 | +1.4 |
+| VIX3M/VIX low AND credit spread 1M change high | 146 / 14 | +12.7 | 160 / 13 | +6.6 |
+| VIX3M/VIX low AND S&P 500 1M return low | 163 / 16 | +11.3 | 205 / 17 | +5.3 |
+| VIX3M/VIX low | 210 / 24 | +9.1 | 300 / 24 | +2.6 |
+| VIX high AND S&P 500 1M return low | 273 / 15 | +9.2 | 203 / 14 | +4.4 |
+| credit spread 1M change high AND S&P 500 1M return low | 285 / 21 | +8.4 | 216 / 15 | +6.5 |
+
+Three further candidates fixed in advance were also tested and rejected: see [`PREREGISTRATION.md`](PREREGISTRATION.md).
 
 ![Event study](figures/02_event_study.png)
 ![Conditional outcomes](figures/03_conditional_outcomes.png)
 
 ## 4. Backtests (daily ladders, approximate mark-to-market, no costs)
-**A. Long 1M S&P 500 variance at the VIX, over 25.7 years.** This is the crash-payoff leg of the trade.
+**Long 1M S&P 500 variance at the VIX, over 25.7 years.** This is the crash-payoff leg of the trade.
 
 | Strategy | From | Years | Total P&L (vol pts) | P&L/yr | Max drawdown | Time in market | P&L per year invested |
 |---|---|---|---|---|---|---|---|
@@ -107,22 +124,6 @@ There were 30 S1-sectors episodes. 7 were followed by a sell-off of at least 10%
 
 ![Variance backtest](figures/04_backtest_variance_long_history.png)
 
-**B. Long 3M correlation at COR3M, since 2006-01-03** (COR3M history only).
-
-| Strategy | From | Years | Total P&L (corr pts) | P&L/yr | Max drawdown | Time in market | P&L per year invested |
-|---|---|---|---|---|---|---|---|
-| S1-sectors ON | 2008-05-16 | 18.4 | -63.1 | -3.42 | -79.3 | 16% | -21.65 |
-| S1-stocks ON | 2006-10-23 | 20.0 | -53.8 | -2.69 | -66.6 | 9% | -31.56 |
-| Every day (benchmark) | 2006-01-03 | 20.8 | -1764.7 | -84.78 | -1770.9 | 100% | -84.78 |
-
-| Strike paid (S1-sectors entries) | Total P&L (corr pts) | P&L/yr | Max DD |
-|---|---|---|---|
-| COR3M + 0 pts | -63.1 | -3.42 | -79.3 |
-| COR3M + 3 pts | -98.1 | -5.32 | -111.7 |
-| COR3M + 5 pts | -121.4 | -6.58 | -133.3 |
-| COR3M + 8 pts | -156.3 | -8.47 | -165.7 |
-
-![Correlation backtest](figures/05_backtest_correlation.png)
 
 ## 5. Structure
 * **Long** 3M SPX ATM straddles (or an SPX variance swap). **Short** 3M ATM straddles on the 25 largest names (52% of index weight). Delta-hedge daily.
@@ -145,15 +146,15 @@ There were 30 S1-sectors episodes. 7 were followed by a sell-off of at least 10%
 * **Small sample:** few independent episodes, so the percentages are indicative rather than statistically significant.
 * **Sector correlation:** the long-history signal uses sector correlation, which is not single-stock correlation.
 * **Backtest A:** it covers only the long-index-vol leg, and treats VIX² as the variance strike with no convexity adjustment.
-* **Backtest B:** it uses COR3M as the strike, but COR3M is not an executable price, and it covers only the COR3M sample.
+* **Correlation P&L:** COR3M is used as the strike, but it is an index, not an executable price.
 * **Not modelled anywhere:** short single-stock gamma and transaction costs.
-* **Measure of realized correlation:** index-based (the COR3M convention) and basket-based measures differ by many points and can flip the sign of the correlation P&L. Backtest B and the reference-crisis table still use today's names in the past; the point-in-time rows are the ones to trust.
+* **Measure of realized correlation:** index-based (the COR3M convention) and basket-based measures differ by many points and can flip the sign of the correlation P&L. The reference-crisis table still uses today's names in the past; the point-in-time rows are the ones to trust.
 * **Point-in-time basket:** the 50 largest US companies by CRSP capitalization, not the exact Cboe basket (no float adjustment, no index-membership test); sample ends 2025-12-31.
 
 ## 8. Conclusion
 **1. Forecasting power.** After S1-sectors days, the S&P 500 fell 10% or more within 3M in 22% of cases, against 16% on a random day (1.36×, versus the 1.5× bar fixed in advance). 7 of 30 episodes were followed by such a sell-off and 22 were false alarms. With so few episodes the test cannot separate 1.5× from no effect at all (one-sided p = 0.21, 95% interval for the lift 0.72× to 2.51×, power 30%): there is no evidence that the signal forecasts crashes. Counting only days when the S&P 500 is within 5% of its 1-year high, the rates are 9% after the signal and 9% on any such day: the apparent lift comes from days already inside a drawdown.
 
-**2. Cost of the insurance.** Measured on the point-in-time basket (the 50 largest companies of each day, frozen at entry), buying 3M correlation at COR3M after the signal returned +2.4 pts per trade, against -4.2 on a random day and -2.2 on days with the same COR3M level (signal minus random day, 95% interval +1.3 to +12.1). The signal adds something beyond 'COR3M is low'. With today's names applied to the past the same figures are -6.3 vs -21.5: most of that apparent cost, and of the apparent saving, is survivorship bias (realized correlation averages 38.2 point-in-time against 19.9). Measured on the basket itself instead of through the index, the point-in-time figures are 9.8 vs -4.6: same direction, but the size depends heavily on the measure. Robustness: leaving out any one of the 29 episodes, the signal-day average stays between -0.7 and 3.7 pts, above the random-day figure each time; but averaged per episode rather than per day it is -0.7 (median -3.4), with 8 of 29 episodes positive (basket-based: 5.6, 17 of 29). The saving against a random day survives; a positive P&L rests on a few sell-off episodes. Several outcomes were examined: multiplying the index-based p-value (0.03) by five tests gives 0.15. Correlation spikes of +15 pts followed 22% of signal days against 12% of random days, and 24% of days with equally low correlation. Buying variance at the VIX: -1.47 after the signal vs -2.12 on a random day and -2.23 at the same VIX level (signal minus random day, 95% interval -1.34 to +2.90).
+**2. Cost of the insurance.** Measured on the point-in-time basket (the 50 largest companies of each day, frozen at entry), buying 3M correlation at COR3M after the signal returned +2.4 pts per trade, against -4.2 on a random day and -2.2 on days with the same COR3M level (signal minus random day, 95% interval +1.3 to +12.1). The signal adds something beyond 'COR3M is low'. With today's names applied to the past the same figures are -6.3 vs -21.5: most of that apparent cost, and of the apparent saving, is survivorship bias (realized correlation averages 38.2 point-in-time against 19.9). Measured on the basket itself instead of through the index, the point-in-time figures are 9.8 vs -4.6: same direction, but the size depends heavily on the measure. Robustness: leaving out any one of the 29 episodes, the signal-day average stays between -0.7 and 3.7 pts, above the random-day figure each time; but averaged per episode rather than per day it is -0.6 (median -3.4), with 8 of 29 episodes positive (basket-based: 5.6, 17 of 29). The saving against a random day survives; a positive P&L rests on a few sell-off episodes. Several outcomes were examined: multiplying the index-based p-value (0.03) by five tests gives 0.15. Correlation spikes of +15 pts followed 22% of signal days against 12% of random days, and 24% of days with equally low correlation. Buying variance at the VIX: -1.47 after the signal vs -2.12 on a random day and -2.23 at the same VIX level (signal minus random day, 95% interval -1.34 to +2.90).
 
 **3. The naive rule.** After high-VIX days, correlation spikes followed 3% of days (random day: 6%) and buying variance at the VIX returned -3.41 vol pts per trade (random day: -2.56). High volatility arrives with the crisis, when insurance is already expensive: it is the wrong moment to buy correlation.
 
