@@ -93,6 +93,8 @@ There were 30 S1-sectors episodes. 7 were followed by a sell-off of at least 10%
 | VIX high AND S&P 500 1M return low | 273 / 15 | +9.2 | 203 / 14 | +4.4 |
 | credit spread 1M change high AND S&P 500 1M return low | 285 / 21 | +8.4 | 216 / 15 | +6.5 |
 
+**The same lead on the euro area** (public STOXX files, 2000–2016; one run, protocol written first). Rule: VSTOXX 3-month sub-index over VSTOXX in the bottom 20% of its own past. Buying 1M variance at the VSTOXX returned +1.37 vol pts per trade on the 233 signal days (41 episodes), against -2.24 on any day and -2.81 at the same VSTOXX level (shift-test p = 0.007). Leaving out one episode, the average can fall to -3.0; per episode the average is -3.8 and 7 of 41 episodes are positive. **Not retained**: the day-weighted average is carried by very few episodes, the profile of crash insurance bought late rather than of a timing signal. This is a variance trade, not a correlation trade, and the sample overlaps the discovery years of the US search.
+
 The follow-up tests are recorded in [`PREREGISTRATION.md`](PREREGISTRATION.md) with their protocols written first: three candidates fixed in advance and a euro-area test of the term-structure lead, none retained, and a forward test that is still running.
 
 ![Event study](figures/02_event_study.png)

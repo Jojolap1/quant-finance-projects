@@ -85,7 +85,7 @@ Run once on 2026-11-11, after the amendment commit. Sample 2000-12-20 to 2016-01
 
 | Criterion | Result | Met? |
 |---|---|---|
-| Time-shift test, one-sided | signal +1.37 vs all days -2.24, p = 0.009 | yes |
+| Time-shift test, one-sided | signal +1.37 vs all days -2.24, p = 0.007 (0.009 in a first run with a different random seed) | yes |
 | Edge over the same VSTOXX quintile | +1.37 vs -2.81 | yes |
 | Survives leaving any one episode out | worst case -3.0, below the all-day mean | **no** |
 
