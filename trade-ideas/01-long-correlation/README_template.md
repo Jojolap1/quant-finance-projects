@@ -55,6 +55,10 @@ There were {{S1S_EP}} S1-sectors episodes. {{S1S_EP_CRISIS}} were followed by a 
 
 {{INF_TABLE}}
 
+**Looking for a better signal, with a holdout.** {{SEARCH_MD}}
+
+Three further candidates fixed in advance were also tested and rejected: see [`PREREGISTRATION.md`](PREREGISTRATION.md).
+
 ![Event study](figures/02_event_study.png)
 ![Conditional outcomes](figures/03_conditional_outcomes.png)
 

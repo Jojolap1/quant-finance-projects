@@ -40,3 +40,14 @@ Run on 2026-11-10, data as of 2026-11-09, after the pre-registration commit. Cor
 
 For reference, the original sector-dispersion signal on the same outcome: +2.4 / -4.2 / -2.2, shift-test p 0.03 (0.15 after a correction for five outcomes), worst leave-one-episode-out mean -0.7.
 
+
+## Amendment — a second, separate protocol: search with a holdout
+*Written and committed before this search was run on real data.*
+
+The statement above ("no further candidate is tried on this sample") applied to hand-picked candidates judged on the whole sample. A wider search is legitimate only if the sample used to choose a signal is not the one used to judge it. Protocol:
+
+* **Family.** Eleven indicators, as past-only expanding percentiles: sector dispersion, sector correlation, point-in-time stock dispersion and correlation, VIX, COR3M, VIX3M/VIX, COR3M minus trailing realized correlation, 21-day change in the Baa–Treasury spread, 21-day S&P 500 return, 21-day S&P 500 realized volatility. Each is taken "high" (≥ 80th percentile) or "low" (≤ 20th), alone or in pairs.
+* **Discovery sample.** Start of COR3M to 2016-12-31, minus the last 63 trading days. Score: signal-day mean of the primary outcome minus the mean on days with the same COR3M level, divided by its standard error computed with the number of episodes. Minimum 100 signal days and 8 episodes.
+* **Validation sample.** 2017-01-01 onwards. Only the top-ranked candidate is tested, once. It is retained if the one-sided time-shift test p-value is ≤ 0.05, the edge over days with the same COR3M level is positive, and the signal-day mean stays above the all-day mean when any one episode is left out.
+* **Known weakness.** The validation years were already looked at for the sector signal, the stock signal and C1–C3 above, so the holdout is clean for the selection but not untouched. Its power is low (nine years).
+* This is the last search on this sample. Its result is reported in the README, whatever it is.
