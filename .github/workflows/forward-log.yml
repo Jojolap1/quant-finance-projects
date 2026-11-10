@@ -1,0 +1,27 @@
+name: Forward log (trade idea 01)
+
+on:
+  schedule:
+    - cron: "40 23 * * 1-5"    # after the US close, Monday to Friday
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  log:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pandas yfinance requests
+      - run: python trade-ideas/01-long-correlation/forward_log.py
+      - name: Commit new rows
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add trade-ideas/01-long-correlation/forward_log.csv
+          git diff --cached --quiet || git commit -m "Forward log: new trading day(s)"
+          git push

@@ -1,0 +1,5 @@
+# Licensed CRSP extract used by the optional point-in-time section: never commit
+crsp_dsf_top50.*
+*_csv.zip
+__pycache__/
+*.pyc
