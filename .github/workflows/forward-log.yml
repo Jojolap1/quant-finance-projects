@@ -22,6 +22,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add trade-ideas/01-long-correlation/forward_log.csv
-          git diff --cached --quiet || git commit -m "Forward log: new trading day(s)"
+          FILE=trade-ideas/01-long-correlation/forward_log.csv
+          if [ ! -f "$FILE" ]; then echo "No row to log yet."; exit 0; fi
+          git add "$FILE"
+          if git diff --cached --quiet; then echo "Nothing new."; exit 0; fi
+          git commit -m "Forward log: new trading day(s)"
           git push
