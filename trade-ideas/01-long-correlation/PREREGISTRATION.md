@@ -28,4 +28,15 @@ A candidate is retained only if all three hold:
 No threshold, window or definition will be changed after seeing the results. If none passes, the conclusion is that none of the three adds anything, and no further candidate is tried on this sample.
 
 ## Results
-*(to be appended)*
+Run on 2026-11-10, data as of 2026-11-09, after the pre-registration commit. Correlation P&L in correlation points per trade, variance P&L in vol points.
+
+| # | Days ON | Episodes | Correlation P&L: signal / all days / same COR3M level | Shift-test p (bar: 0.0167) | Signal minus all days, 95% interval | Worst leave-one-episode-out mean | Variance P&L: signal / all days (p) | ≥10% fall: signal / all days |
+|---|---|---|---|---|---|---|---|---|
+| C1 implied minus realized low | 747 | 19 | -6.2 / -4.8 / -5.4 | 0.69 | -5.3 to +2.5 | -8.1 | -3.54 / -1.71 (0.87) | 19% / 16% |
+| C2 credit widening, VIX low | 195 | 27 | -3.4 / -4.2 / -4.7 | 0.41 | -4.0 to +5.2 | -4.7 | -1.91 / -2.56 (0.22) | 12% / 14% |
+| C3 steep VIX term structure | 1475 | 33 | -6.0 / -4.8 / -4.3 | 0.82 | -3.8 to +1.4 | -6.9 | -2.61 / -1.80 (0.81) | 9% / 14% |
+
+**None of the three candidates is retained.** None meets the first criterion; C1 and C3 are worse than a random day, against the expected sign. As stated above, no further candidate is tried on this sample.
+
+For reference, the original sector-dispersion signal on the same outcome: +2.4 / -4.2 / -2.2, shift-test p 0.03 (0.15 after a correction for five outcomes), worst leave-one-episode-out mean -0.7.
+
