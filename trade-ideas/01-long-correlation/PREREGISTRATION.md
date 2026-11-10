@@ -51,3 +51,20 @@ The statement above ("no further candidate is tried on this sample") applied to 
 * **Validation sample.** 2017-01-01 onwards. Only the top-ranked candidate is tested, once. It is retained if the one-sided time-shift test p-value is ≤ 0.05, the edge over days with the same COR3M level is positive, and the signal-day mean stays above the all-day mean when any one episode is left out.
 * **Known weakness.** The validation years were already looked at for the sector signal, the stock signal and C1–C3 above, so the holdout is clean for the selection but not untouched. Its power is low (nine years).
 * This is the last search on this sample. Its result is reported in the README, whatever it is.
+
+## Result of the search with a holdout
+242 candidates were scored on 2006–2016. The top-ranked one, "COR3M high AND VIX3M/VIX low", fired in only 2 episodes after 2016 (shift-test p = 0.51) and is **not retained**. All ten best candidates keep a positive edge after the split and "VIX3M/VIX low" appears in eight of them. That pattern was not the designated test, so it is a lead, not a result. The two protocols below are the only legitimate ways left to test it; both were written before any of their data was looked at.
+
+## Protocol 3 — forward test on the US market
+* **Rule.** ON when VIX3M / VIX is at or below the 20th percentile of its own past (expanding, minimum 504 days, Yahoo history from 2006, i.e. exactly the series used in the search).
+* **Start.** 2026-11-11. Nothing before that date counts.
+* **Log.** `forward_log.py` appends one row per trading day to `forward_log.csv` (VIX, VIX3M, ratio, percentile, ON/OFF, COR3M) and never rewrites a row. The scheduled workflow commits it, so each row carries a public timestamp.
+* **Primary outcome.** P&L of buying 3M correlation at COR3M on the point-in-time basket, as in the notebook; compared with days at the same COR3M level over the same forward period.
+* **Evaluation.** Once, when ten completed episodes have accumulated after the start date, or on 2029-12-31 at the latest. Retained if the one-sided time-shift test p-value is ≤ 0.05, the edge over the same COR3M level is positive, and it survives leaving any one episode out.
+
+## Protocol 4 — out-of-sample test on the euro area
+* **Rule.** ON when VSTOXX 90 days / VSTOXX 30 days is at or below the 20th percentile of its own past (expanding, minimum 504 days).
+* **Primary outcome.** P&L of buying 3M implied correlation on the EURO STOXX 50: implied correlation computed with the COR formula from 3M at-the-money implied volatilities of the index and of its constituents (weights and membership of each date), against the realized correlation of the basket frozen at entry over the next 63 trading days. Benchmark: days in the same quintile of implied correlation.
+* **Fallback, fixed now.** If constituent implied volatilities cannot be obtained, the primary outcome becomes the P&L of buying 1M variance at the VSTOXX 30 days, against days in the same VSTOXX quintile. The fallback is weaker (it is not a correlation trade) and will be labelled as such.
+* **Sample.** All available history, taken whole; no split, no threshold change.
+* **Decision.** Same three criteria as protocol 3. One test, reported whatever it gives.
