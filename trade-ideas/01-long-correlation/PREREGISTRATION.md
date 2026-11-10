@@ -68,3 +68,14 @@ The statement above ("no further candidate is tried on this sample") applied to 
 * **Fallback, fixed now.** If constituent implied volatilities cannot be obtained, the primary outcome becomes the P&L of buying 1M variance at the VSTOXX 30 days, against days in the same VSTOXX quintile. The fallback is weaker (it is not a correlation trade) and will be labelled as such.
 * **Sample.** All available history, taken whole; no split, no threshold change.
 * **Decision.** Same three criteria as protocol 3. One test, reported whatever it gives.
+
+### Protocol 4 — amendment before running (public data only)
+*Written after checking which public files exist and what dates they cover, and before computing any outcome.*
+
+No Bloomberg access, and no public history of single-stock implied volatilities in Europe: the **fallback outcome applies** (P&L of buying 1M variance at the VSTOXX, against days in the same VSTOXX quintile). Three deviations from the text above, imposed by the data:
+
+1. **Sources.** STOXX public files: `h_vstoxx.txt` (VSTOXX and its sub-indices, 1999-01-04 to 2016-02-12) and `hbrbcpe.txt` (EURO STOXX 50 price index, to 2016-10-04).
+2. **Term structure.** The 90-day main index is not in the public file. The ratio is the **3-month sub-index (V6I3) over the VSTOXX (V2TX)**.
+3. **Sample.** It ends in February 2016 because the public file stops there. It overlaps the discovery years of the US search, and European and US volatility move together, so this is a different market but not an independent period.
+
+Everything else is unchanged: ON at or below the 20th past-only percentile (minimum 504 days), realized variance over the next 21 trading days, one-sided time-shift test at 5%, positive edge over the same VSTOXX quintile, and survival when any one episode is left out. One run.
