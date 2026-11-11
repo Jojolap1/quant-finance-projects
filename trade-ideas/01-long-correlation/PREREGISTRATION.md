@@ -132,3 +132,6 @@ Run on 2026-11-11, after the protocol commit, on Yahoo data cut at 2026-11-09 (t
 What stands: the every-day seller's premium (+21.2 vol pts a year on this sample, with a -173.8 drawdown) and, before costs, a smaller drawdown with the switch. What does not: a validated rule to stop.
 
 **Forward evaluation, fixed now.** The log of protocol 3 records this same rule from 2026-11-11. At the evaluation date of protocol 3, the four criteria above will be computed for the seller on the forward days only, once.
+
+### Protocol 5 — note on later runs of the notebook
+The notebook was run again the same day on data to 2026-11-10, one trading day more than the registered run. The four figures of the table are unchanged to the digits shown, except the time-shift p-value: 0.050 instead of 0.051, which on its own would meet criterion 3. That does not change the verdict. The protocol allowed one run, and a result that crosses the bar with one more day of data, by one thousandth and inside the Monte-Carlo error, is a result on the bar. The registered verdict (**not retained**) is now written in the notebook's configuration (`SELL_REGISTERED`), so later runs report their own p-value next to it without overwriting it.
