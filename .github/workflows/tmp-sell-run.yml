@@ -1,0 +1,27 @@
+name: Seller test, single run (temporary)
+
+on:
+  push:
+    branches: [sell-premium-switch]
+    paths: [".github/workflows/tmp-sell-run.yml"]
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pandas numpy scipy matplotlib requests yfinance
+      - run: python trade-ideas/01-long-correlation/_tmp_run_sell.py
+      - name: Commit the output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add trade-ideas/01-long-correlation/_tmp_sell_out
+          git commit -m "Seller test: raw output of the single run"
+          git push
