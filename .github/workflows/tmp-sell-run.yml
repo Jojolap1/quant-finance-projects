@@ -1,4 +1,5 @@
 name: Seller test, single run (temporary)
+# second execution: same data cut, same seed; wording of the generated paragraph only
 
 on:
   push:
