@@ -4,19 +4,17 @@
 
 > **Status: tests done, one forward test running.** The original idea (buy correlation when dispersion is extreme) is not supported as a timing rule. Five follow-up protocols were written before their runs ([`PREREGISTRATION.md`](PREREGISTRATION.md)); the term-structure rule is logged every trading day in `forward_log.csv`.
 
-> **Rule status on {{SIG_DATE}}: {{VERDICT}}** (S1-stocks: {{S1_NOW}} · S0 high VIX: {{S0_NOW}})
->
-> **Does 25+ years of data back the thesis? {{THESIS_VERDICT}}**
->
-> **Where the study ended up:** {{SELL_LINE}}
+> **In short.** {{SUMMARY}}
 
-**Bottom line (S1-sectors vs a random day, same period):**
+*Rule status on {{SIG_DATE}}: {{VERDICT}} (S1-stocks: {{S1_NOW}} · S0 high VIX: {{S0_NOW}}).*
+
+**Key figures (S1-sectors vs a random day, same period):**
 * S&P 500 falls of 10% or more within 3M: {{S1S_PC}} vs {{S1S_PCB}} ({{S1S_LIFT}}×; threshold fixed in advance: {{LIFT_THR}}×; 95% interval {{S1S_LIFT_LO}}× to {{S1S_LIFT_HI}}×, power {{S1S_POWER}}).
 * Correlation spikes of +{{CORR_SPIKE}} pts within 3M: {{S1S_PS}} vs {{S1S_PSB}}.
 * Sell-offs counted only from days within 5% of the 1-year high: {{S1S_ONSET_PC}} vs {{S1S_ONSET_PCB}}.
 * Average P&L per trade of buying 3M correlation at COR3M, point-in-time basket: {{X_CP}} vs {{X_CPB}} corr pts ({{X_CPM}} on days with the same COR3M level; signal minus base, 95% interval {{X_LO}} to {{X_HI}}). With today's names applied to the past: {{S1S_CP}} vs {{S1S_CPB}}, a survivorship artefact.
 * Buying 1M variance at the VIX: {{S1S_VP}} vs {{S1S_VPB}} vol pts ({{S1S_VPM}} at the same VIX level; 95% interval of the gap {{S1S_VP_LO}} to {{S1S_VP_HI}}).
-* The other side: {{SELL_LINE}}
+* The seller's side: {{SELL_LINE}}
 * Naive high-VIX rule (S0), for comparison: correlation spikes {{S0_PS}} vs {{S0_PSB}}, variance P&L {{S0_VP}} vs {{S0_VPB}} vol pts.
 
 ## 1. Thesis
@@ -47,6 +45,8 @@ The idea is tested as a rule fixed in advance, not by picking crisis dates. The 
 | S0 high VIX | {{S0_DAYS}} | {{S0_EP}} | {{S0_PC}} vs {{S0_PCB}} ({{S0_LIFT}}×) | {{S0_PS}} vs {{S0_PSB}} | {{S0_VP}} vs {{S0_VPB}} |
 
 There were {{S1S_EP}} S1-sectors episodes. {{S1S_EP_CRISIS}} were followed by a sell-off of at least {{CRISIS_DD}} within 3M, and {{S1S_EP_FALSE}} were false alarms, with neither a sell-off nor a correlation spike.
+
+**Verdict of the rule fixed in advance.** {{THESIS_VERDICT}}
 
 **What the point-in-time universe changes.** Over the common sample, 3M realized correlation averages {{PIT_RC}} with the names of each day against {{TODAY_RC}} with today's names applied to the past, so COR3M minus trailing realized correlation is {{PIT_PREM}} pts instead of {{TODAY_PREM}}. Buying 3M correlation at COR3M then returns {{S1P_CP}} pts per trade after the signal against {{S1P_CPB}} on a random day ({{S1P_CPM}} on days with the same COR3M level).
 
@@ -112,4 +112,6 @@ The follow-up tests are recorded in [`PREREGISTRATION.md`](PREREGISTRATION.md) w
 * **Point-in-time basket:** the 50 largest US companies by CRSP capitalization, not the exact Cboe basket (no float adjustment, no index-membership test); sample ends 2025-12-31.
 
 ## 8. Conclusion
+*Five points; the figures behind each one are in sections 3 and 4.*
+
 {{CONCLUSION}}
