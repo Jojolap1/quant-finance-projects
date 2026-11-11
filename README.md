@@ -9,7 +9,7 @@ Derivatives pricing, implied volatility and trade-idea projects in Python.
 |---|---|---|
 | G10 FX Option Pricer | Interactive Python app: multi-leg FX options with a volatility smile, premium and Greeks | [Live app](https://jonathan-fx-pricer.streamlit.app) |
 | SPX Implied Volatility Surface | Implied vol surface rebuilt from listed SPX option quotes | [Notebook](spx_implied_volatility_surface.ipynb) |
-| Trade Idea #01 — Conditional Long Correlation *(in progress)* | Desk-style pitch: buying S&P 500 correlation (short dispersion) when dispersion is extreme, tested on full history | [Pitch](trade-ideas/01-long-correlation/) |
+| Trade Idea #01 — S&P 500 correlation: buy it or sell it? | Desk-style pitch that turned around: I set out to buy S&P 500 correlation when dispersion is extreme; the tests say the premium is on the seller's side, and the rule to step aside is not validated yet | [Pitch](trade-ideas/01-long-correlation/) |
 
 ---
 
@@ -46,7 +46,7 @@ Desk-style pitches. Each one has a notebook that runs end to end in Google Colab
 
 | # | Idea | Asset class | Status | Notebook |
 |---|---|---|---|---|
-| 01 | [Conditional long correlation — short S&P 500 dispersion](trade-ideas/01-long-correlation/) | Equity derivatives | In progress | [Open in Colab](https://colab.research.google.com/github/Jojolap1/quant-finance-projects/blob/main/trade-ideas/01-long-correlation/long_correlation_trade_idea.ipynb) |
+| 01 | [S&P 500 correlation: I set out to buy it, the data says sell it and know when to stop](trade-ideas/01-long-correlation/) | Equity derivatives | Results published; forward test running | [Open in Colab](https://colab.research.google.com/github/Jojolap1/quant-finance-projects/blob/main/trade-ideas/01-long-correlation/long_correlation_trade_idea.ipynb) |
 
 ---
 
