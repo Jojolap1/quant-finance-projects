@@ -111,3 +111,24 @@ Status of the lead after protocols 2 and 4: suggestive on day-weighted averages 
 * **Reported, not used to decide.** Annual P&L, worst tranche, time in the market, P&L in the stress windows of the notebook, the number of OFF episodes in which selling would have lost money, and three variants: thresholds of 10% and 30%, the switch read the same day instead of the day before, and closing open tranches at their approximate mark on the first OFF day (realized variance so far plus VIX² for the remaining days, no bid-offer). None of these variants can rescue a failed primary test.
 * **Known weaknesses, stated now.** (a) The switch was found on these same years (protocol 2), on the buyer's correlation P&L: this is not an out-of-sample test, and the forward log of protocol 3 remains the only clean evidence. (b) VIX² is not an executable variance strike and the seller gets the bid; no costs are modelled. (c) The curve usually inverts after volatility has already jumped, when variance is expensive: the naive high-VIX rule of the README shows that buying then is a bad trade, so the switch may well take the seller out at the wrong time. (d) Only the index-variance leg is tested; selling correlation itself (long dispersion) needs single-stock implied volatilities that are not public.
 * One run, reported whatever it gives.
+
+### Protocol 5 — result
+Run on 2026-11-11, after the protocol commit, on Yahoo data cut at 2026-11-09 (the date of the published levels). The run executed section 6C of the notebook unchanged; a second execution with the same data and seed, made only to reword the generated paragraph, returned identical figures. Sample 2008-07-17 to 2026-11-09: 4,587 days, switch OFF on 544 days in 53 episodes (12% of the time). Check against the published tables: the every-day ladder since 2001-01-22 gives 649.2 vol pts in total and 25.22 a year, the figures of backtest A with the sign reversed.
+
+| | P&L per year (vol pts) | Max drawdown | P&L per year / max drawdown | Worst tranche |
+|---|---|---|---|---|
+| Sell every day | +21.2 | -173.8 | 0.12 | -252.2 |
+| Sell with the switch | +22.9 | -111.6 | 0.21 | -252.2 |
+
+| Criterion | Result | Met? |
+|---|---|---|
+| 1. Max drawdown at least one third smaller | -173.8 → -111.6 (-36%) | yes |
+| 2. P&L per year / max drawdown higher | 0.12 → 0.21 | yes |
+| 3. Seller's P&L per tranche lower on OFF days, time-shift p ≤ 0.05 | -1.19 vs +1.80 on all days, p = 0.051 | **no** |
+| 4. Still lower leaving any one OFF episode out | worst case +1.44 vs +1.80 | yes |
+
+**Not retained.** Three criteria are met and the third is missed by one thousandth, inside the Monte-Carlo error of a p-value drawn from 2,000 shifts (about ±0.005). The rule was "all four", so the switch fails as written and no other seed or number of draws was tried. Three things temper the three criteria that pass: the switch was found on these same years; selling on OFF days lost money in only 4 of 53 episodes (the average per episode is +4.8), so the benefit comes from a handful of crises; and the worst tranche is identical with and without the switch, because the crash hits tranches sold before the curve inverts. The variant that closes open tranches on the first OFF day shows a maximum drawdown of -37.5, but it assumes closing at VIX² with no bid-offer in the middle of a crash and was declared in advance as unable to rescue the test.
+
+What stands: the every-day seller's premium (+21.2 vol pts a year on this sample, with a -173.8 drawdown) and, before costs, a smaller drawdown with the switch. What does not: a validated rule to stop.
+
+**Forward evaluation, fixed now.** The log of protocol 3 records this same rule from 2026-11-11. At the evaluation date of protocol 3, the four criteria above will be computed for the seller on the forward days only, once.
