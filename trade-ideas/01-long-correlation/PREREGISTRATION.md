@@ -92,3 +92,22 @@ Run once on 2026-11-11, after the amendment commit. Sample 2000-12-20 to 2016-01
 **Not retained.** The day-weighted average is carried by a single episode; averaged per episode the P&L is -3.8 and only 7 of 41 episodes are positive. Buying variance when the term structure is flat or inverted lost money most of the time and paid very large in one crisis. That is the profile of crash insurance bought late, not of a timing signal.
 
 Status of the lead after protocols 2 and 4: suggestive on day-weighted averages in two markets, not robust to removing one episode in Europe, not testable on correlation itself outside the US. Protocol 3 (forward test) remains open.
+
+## Protocol 5 — the other side: selling the premium with a term-structure switch
+*Written on 2026-11-11, before computing any figure of this protocol.*
+
+**Why.** Every test above looked for the right moment to *buy* correlation or variance. The most stable figures of the whole study are the benchmarks: buying 1M variance at the VIX every day, or 3M correlation at COR3M every day, loses on average. The seller collects that premium and carries the crash risk. This protocol tests the seller's side, with one rule to stand aside.
+
+* **Trade.** Sell 1M S&P 500 variance at the VIX, one tranche of 1/21 unit of vega notional per trading day. P&L of a tranche in vol points: (VIX² − realized variance over the next 21 trading days) / (2 × VIX), zero-mean realized variance, 252-day annualization. This is backtest A of the notebook with the sign reversed.
+* **Switch.** No new tranche on a day when, at the previous close, VIX3M / VIX was at or below the 20th percentile of its own past (expanding, minimum 504 days, Yahoo history from 2006). It is the rule of protocol 3, unchanged, used as an OFF signal for the seller.
+* **Primary version.** Entry filter only: tranches already sold are held to expiry.
+* **Benchmark.** The same ladder sold every day, over the same dates.
+* **Sample.** From the first day the percentile exists to the last day with a completed 21-day outcome. Taken whole.
+* **Decision.** The switch is retained only if all four hold:
+  1. the maximum drawdown of the daily marked ladder is at least one third smaller than for the every-day seller;
+  2. annual P&L divided by maximum drawdown is higher than for the every-day seller;
+  3. the seller's P&L per tranche on OFF days is lower than on all days, one-sided time-shift test p ≤ 0.05 (2,000 circular shifts of at least 252 days, seed 7);
+  4. leaving out any one OFF episode (episodes separated by 21 trading days), the seller's average on the remaining OFF days stays below the all-day average.
+* **Reported, not used to decide.** Annual P&L, worst tranche, time in the market, P&L in the stress windows of the notebook, the number of OFF episodes in which selling would have lost money, and three variants: thresholds of 10% and 30%, the switch read the same day instead of the day before, and closing open tranches at their approximate mark on the first OFF day (realized variance so far plus VIX² for the remaining days, no bid-offer). None of these variants can rescue a failed primary test.
+* **Known weaknesses, stated now.** (a) The switch was found on these same years (protocol 2), on the buyer's correlation P&L: this is not an out-of-sample test, and the forward log of protocol 3 remains the only clean evidence. (b) VIX² is not an executable variance strike and the seller gets the bid; no costs are modelled. (c) The curve usually inverts after volatility has already jumped, when variance is expensive: the naive high-VIX rule of the README shows that buying then is a bad trade, so the switch may well take the seller out at the wrong time. (d) Only the index-variance leg is tested; selling correlation itself (long dispersion) needs single-stock implied volatilities that are not public.
+* One run, reported whatever it gives.
