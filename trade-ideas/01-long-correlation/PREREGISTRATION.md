@@ -135,3 +135,32 @@ What stands: the every-day seller's premium (+21.2 vol pts a year on this sample
 
 ### Protocol 5 — note on later runs of the notebook
 The notebook was run again the same day on data to 2026-11-10, one trading day more than the registered run. The four figures of the table are unchanged to the digits shown, except the time-shift p-value: 0.050 instead of 0.051, which on its own would meet criterion 3. That does not change the verdict. The protocol allowed one run, and a result that crosses the bar with one more day of data, by one thousandth and inside the Monte-Carlo error, is a result on the bar. The registered verdict (**not retained**) is now written in the notebook's configuration (`SELL_REGISTERED`), so later runs report their own p-value next to it without overwriting it.
+
+## Protocol 6 — long dispersion measured with the Cboe Dispersion Index
+*Written on 2026-11-12, before downloading the DSPX history or computing any figure of this protocol.*
+
+**Why.** Protocol 5 could only test the index-variance leg, for lack of a public history of single-stock implied volatilities. The Cboe S&P 500 Dispersion Index (DSPX) fills that gap in aggregate: by its methodology, DSPX² is the weighted average 30-day expected variance of the basket's stocks minus VIX². That is the strike of a variance dispersion trade (long single-stock variance, short index variance), which is the seller's side of correlation.
+
+* **Trade.** Long dispersion, one tranche per trading day, held 21 trading days. P&L of a tranche, in dispersion points: (realized dispersion² − DSPX²) / (2 × DSPX), with realized dispersion² = weighted average of the stocks' realized variances minus the realized variance of the S&P 500 over the next 21 trading days (zero-mean, 252-day annualization). Days with DSPX at zero are skipped.
+* **Realized basket.** The 200 largest US companies by previous-day CRSP capitalization, weights frozen on the entry day; a name without a full 21-day window is dropped and the weights renormalized. This is a proxy: the DSPX basket is the subset of S&P 500 stocks with liquid options, weighted by float.
+* **Sample.** From the first DSPX value (2014-06-19) to the last day with a completed outcome in the CRSP file. Taken whole.
+* **Decision.** "Long dispersion earned a premium" is retained only if all three hold:
+  1. the average P&L per tranche is positive, with a 95% stationary-bootstrap interval that excludes zero (1,000 draws, mean block 63 days, seed 7);
+  2. the average is also positive with the 50 largest companies instead of 200;
+  3. leaving out any one calendar year, the average stays positive.
+* **Reported, not used to decide.** P&L per year and maximum drawdown of the daily ladder (tranches marked only at expiry), worst tranche, share of positive tranches, the same figures for the seller of 1M index variance at the VIX over the same dates, the correlation between the two, and the P&L in the stress windows of the notebook.
+* **Known weaknesses, stated now.** (a) DSPX was launched in September 2023: earlier values are back-tested by Cboe. (b) The realized basket is not the DSPX basket; leaving out the smaller, more volatile S&P 500 names should understate realized dispersion, which works against the trade. (c) DSPX is built from option mid-quotes with the VIX method: it is not an executable strike, single-stock variance is costly to trade, and no cost is modelled. (d) The horizon is 21 trading days against 30 calendar days for the index. (e) About eleven years, with few crises.
+* One run, reported whatever it gives. The verdict will be recorded in the notebook's configuration, as for protocol 5.
+
+### Protocol 6 — result
+Run on 2026-11-12, after the protocol commit, on the DSPX history published by Cboe and the CRSP file to 2025-12-31. Sample 2014-06-19 to 2025-12-01, 2,880 days. One tranche checked by hand against the code (2019-03-15). A second execution with the same data and seed, made only to reword the generated paragraph, returned identical figures.
+
+| Criterion | Result | Met? |
+|---|---|---|
+| 1. Average P&L per tranche positive, 95% interval excluding zero | -1.15 dispersion pts (-1.93 to -0.24) | **no** |
+| 2. Also positive with the 50 largest companies | -2.08 | **no** |
+| 3. Still positive leaving out any one calendar year | worst case -1.64 (without 2020) | **no** |
+
+**Not retained.** Long dispersion struck at DSPX lost on average: -13.4 dispersion pts a year on the daily ladder, 27% of tranches positive, a loss in 11 calendar years out of 12. The only winning year is 2020 (+3.90 per tranche; +15.4 over the COVID window, when the seller of index variance lost 99.0). Its tranche P&L has a correlation of -0.65 with short index variance: on this measure long dispersion behaves like insurance, not like a premium.
+
+Two reservations. The average rises with the breadth of the realized basket (-2.08 with 50 names, -1.15 with 200), so the proxy basket explains part of the shortfall and the true figure for the DSPX basket is probably less negative; the sign is not established beyond doubt. And DSPX is a variance strike over 30 days, which includes the price of each stock's tails, whereas the COR3M figure of the README uses at-the-money volatilities over 3 months: the two do not measure the same trade. The verdict is recorded in the notebook's configuration (`DISP_REGISTERED`).
