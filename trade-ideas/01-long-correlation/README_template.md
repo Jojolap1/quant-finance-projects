@@ -24,23 +24,29 @@ Measured instead on the {{N}} largest US companies *of each day* (CRSP, basket f
 
 The buyer of correlation still pays on average, but most of the cost shown by the shortcut is an artefact of the universe. Any backtest of dispersion or correlation trades built on today's index members carries this bias.
 
-## 3. What is not established
+## 3. Long dispersion, measured with the Cboe Dispersion Index
+{{DISP_MD}}
+
+{{DISP_FIG}}
+
+## 4. What is not established
 * **When the seller should stand aside.** The term-structure rule of section 1 meets {{SELL_NMET}} of the 4 criteria fixed in advance (time-shift p = {{SELL_P}} for a 5% bar) and was found on the same years. It is not validated. It is logged every trading day in `forward_log.csv` and will be judged once on new data.
 * **Timing rules for the buyer.** Several were tested, including a search over 242 candidates with a holdout and a test on the euro area; none is retained. Protocols, written before each run, and results are in [`PREREGISTRATION.md`](PREREGISTRATION.md).
-* **Selling correlation itself** (long dispersion: short index vol, long single-stock vol). It needs a history of single-stock implied volatilities, which is not public; only the index-variance leg is backtested.
+* **An executable long-dispersion backtest.** Section 3 uses an index as the strike. A tradable version needs the history of single-stock implied volatilities, name by name, which is not public.
 
-## 4. Structure and risks
+## 5. Structure and risks
 * **Trade:** short 1M S&P 500 variance (variance swap, or delta-hedged straddles as a proxy), rolled as a daily ladder.
 * **Sizing:** on the loss, not on the average gain. Per unit of vega notional, the every-day seller's maximum drawdown was {{SELL_DD}} vol pts and its worst single tranche {{SELL_WORST}} vol pts, against {{SELL_ANN}} a year of premium.
 * **Main risk:** a crash arrives while the book is short. The worst tranche was sold before the VIX curve inverted, so the rule of section 1 does not avoid the first hit; it only stops the selling that follows.
 * **Other risks:** losses are marked long before expiry; a real variance strike trades below VIX² on the bid; margin calls can force an exit at the worst time.
 
-## 5. Method and limitations
+## 6. Method and limitations
 * **Variance P&L:** (realized variance over the next 21 trading days − VIX²) / (2 × VIX), in vol points per unit of vega notional; zero-mean realized variance, 252-day annualization. VIX² stands in for the variance strike, with no convexity adjustment, no bid-offer and no costs.
 * **Correlation P&L:** realized correlation of the basket over the next 63 trading days minus COR3M. COR3M is an index, not an executable price.
+* **Dispersion P&L:** (realized dispersion² − DSPX²) / (2 × DSPX), where realized dispersion² is the cap-weighted average of the stocks' realized variances minus the realized variance of the index over the next 21 trading days. DSPX is back-tested before September 2023.
 * **Point-in-time basket:** the {{N}} largest US companies by CRSP capitalization, not the exact Cboe basket (no float adjustment, no index-membership test); sample ends {{PIT_END}}. The CRSP file is licensed and is not in this repository; without it the notebook runs and skips this part.
 * **Seller's test:** the rule to stand aside was found on the same years, so its backtest is in-sample. The protocol allowed one run; its verdict is fixed in the notebook's configuration and later runs report next to it.
 * **Sample size:** crises are few. Every figure that depends on them rests on a handful of episodes.
 
-## 6. Conclusion
+## 7. Conclusion
 {{CONCLUSION}}
