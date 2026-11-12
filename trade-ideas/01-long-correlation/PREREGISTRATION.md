@@ -151,3 +151,16 @@ The notebook was run again the same day on data to 2026-11-10, one trading day m
 * **Reported, not used to decide.** P&L per year and maximum drawdown of the daily ladder (tranches marked only at expiry), worst tranche, share of positive tranches, the same figures for the seller of 1M index variance at the VIX over the same dates, the correlation between the two, and the P&L in the stress windows of the notebook.
 * **Known weaknesses, stated now.** (a) DSPX was launched in September 2023: earlier values are back-tested by Cboe. (b) The realized basket is not the DSPX basket; leaving out the smaller, more volatile S&P 500 names should understate realized dispersion, which works against the trade. (c) DSPX is built from option mid-quotes with the VIX method: it is not an executable strike, single-stock variance is costly to trade, and no cost is modelled. (d) The horizon is 21 trading days against 30 calendar days for the index. (e) About eleven years, with few crises.
 * One run, reported whatever it gives. The verdict will be recorded in the notebook's configuration, as for protocol 5.
+
+### Protocol 6 — result
+Run on 2026-11-12, after the protocol commit, on the DSPX history published by Cboe and the CRSP file to 2025-12-31. Sample 2014-06-19 to 2025-12-01, 2,880 days. One tranche checked by hand against the code (2019-03-15). A second execution with the same data and seed, made only to reword the generated paragraph, returned identical figures.
+
+| Criterion | Result | Met? |
+|---|---|---|
+| 1. Average P&L per tranche positive, 95% interval excluding zero | -1.15 dispersion pts (-1.93 to -0.24) | **no** |
+| 2. Also positive with the 50 largest companies | -2.08 | **no** |
+| 3. Still positive leaving out any one calendar year | worst case -1.64 (without 2020) | **no** |
+
+**Not retained.** Long dispersion struck at DSPX lost on average: -13.4 dispersion pts a year on the daily ladder, 27% of tranches positive, a loss in 11 calendar years out of 12. The only winning year is 2020 (+3.90 per tranche; +15.4 over the COVID window, when the seller of index variance lost 99.0). Its tranche P&L has a correlation of -0.65 with short index variance: on this measure long dispersion behaves like insurance, not like a premium.
+
+Two reservations. The average rises with the breadth of the realized basket (-2.08 with 50 names, -1.15 with 200), so the proxy basket explains part of the shortfall and the true figure for the DSPX basket is probably less negative; the sign is not established beyond doubt. And DSPX is a variance strike over 30 days, which includes the price of each stock's tails, whereas the COR3M figure of the README uses at-the-money volatilities over 3 months: the two do not measure the same trade. The verdict is recorded in the notebook's configuration (`DISP_REGISTERED`).
